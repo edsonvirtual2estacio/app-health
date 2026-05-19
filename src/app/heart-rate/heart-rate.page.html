@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Meus Batimentos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="heart-rate-page">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Meus Batimentos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="page-content ion-padding">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Sincronização com Smartwatch</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Para usar batimentos cardíacos reais no app, é necessário conectar um smartwatch ou dispositivo de saúde compatível.</p>
+        <p><strong>Status:</strong> {{ smartwatchConnected ? 'Smartwatch conectado' : 'Nenhum smartwatch conectado' }}</p>
+        <ion-button expand="block" color="primary" (click)="connectSmartwatch()" [disabled]="smartwatchConnected">
+          {{ smartwatchConnected ? 'Smartwatch Conectado' : 'Conectar Smartwatch' }}
+        </ion-button>
+        <ion-button expand="block" color="success" (click)="syncHeartRate()" [disabled]="!smartwatchConnected || syncing">
+          {{ syncing ? 'Sincronizando...' : 'Sincronizar Batimentos' }}
+        </ion-button>
+        <div class="heart-rate-card" *ngIf="heartRate !== null">
+          <h2>{{ heartRate }} bpm</h2>
+          <p>Última sincronização: {{ lastSync }}</p>
+        </div>
+        <p class="hint">Dica: para conectar um smartwatch real, adicione um plugin de saúde como Health Connect, Google Fit ou Apple Health no projeto nativo.</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

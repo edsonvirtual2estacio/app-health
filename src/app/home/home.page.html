@@ -1,0 +1,221 @@
+<<ion-header>
+  <ion-toolbar>
+    <ng-container *ngIf="user$ | async as user; else loading">
+      <ion-card class="profile-card">
+        <div class="profile-header">
+          <div class="profile-container">
+            <div class="avatar-wrapper">
+              <ng-container *ngIf="getPhotoURL(user); else noAvatar">
+                <img [src]="getPhotoURL(user)" alt="Avatar do usuário" class="profile-avatar" />
+              </ng-container>
+              <ng-template #noAvatar>
+                <div class="avatar-placeholder">
+                  <ion-icon name="person-circle"></ion-icon>
+                </div>
+              </ng-template>
+            </div>
+            <div class="profile-info">
+              <ion-card-title>{{ getDisplayName(user) }}</ion-card-title>
+              <ion-card-subtitle>{{ user?.email }}</ion-card-subtitle>
+            </div>
+            <ion-button class="logout-btn" fill=  "clear" size="small" (click)="logout()" type="button">
+              Sair
+            </ion-button>
+          </div>
+        </div>
+      </ion-card>
+    </ng-container>
+
+    <ng-template #loading>
+      <ion-title>Carregando perfil...</ion-title>
+    </ng-template>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+  <!-- Seletor de Visualização -->
+  <div class="view-selector">
+    <ion-segment [(ngModel)]="viewMode" (ionChange)="toggleViewMode()">
+      <ion-segment-button value="cards">
+        <ion-icon name="grid"></ion-icon>
+        <ion-label>Cards</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="list">
+        <ion-icon name="list"></ion-icon>
+        <ion-label>Lista</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  
+
+  <!-- Grid de Botões (Cards) -->
+  <div class="buttons-grid" *ngIf="viewMode === 'cards'">
+    <div class="button-card" (click)="navigateTo('heart-rate')">
+      <ion-icon name="heart"></ion-icon>
+      <span>Batimentos Cardíacos</span>
+    </div>
+
+    <div class="button-card" (click)="navigateTo('my-health')">
+      <ion-icon name="fitness"></ion-icon>
+      <span>Minha Saúde</span>
+    </div>
+
+    <div class="button-card special" (click)="navigateTo('schedule-runs')">
+      <ion-icon name="calendar"></ion-icon>
+      <span>Agendar Corridas</span>
+    </div>
+
+    <div class="button-card" (click)="navigateTo('health-2')">
+      <ion-icon name="medical"></ion-icon>
+      <span>Saúde Geral</span>
+    </div>
+
+    <div class="button-card" (click)="navigateTo('heart-rate-2')">
+      <ion-icon name="pulse"></ion-icon>
+      <span>Meus Batimentos</span>
+    </div>
+
+    <div class="button-card" (click)="navigateTo('favorite-music')">
+      <ion-icon name="musical-notes"></ion-icon>
+      <span>Músicas Favoritas</span>
+    </div>
+
+    <div class="button-card" (click)="navigateTo('add-friends')">
+      <ion-icon name="person-add"></ion-icon>
+      <span>Adicionar Amigos</span>
+    </div>
+
+    <div class="button-card emergency" (click)="navigateTo('emergency')">
+      <ion-icon name="alert-circle"></ion-icon>
+      <span>Botão de Emergência</span>
+    </div>
+  </div>
+
+  <!-- Lista de Menus -->
+  <div class="buttons-list" *ngIf="viewMode === 'list'">
+    <div class="list-item" (click)="navigateTo('heart-rate')">
+      <ion-icon name="heart"></ion-icon>
+      <span>Batimentos Cardíacos</span>
+      <ion-icon class="chevron" name="chevron-forward"></ion-icon>
+    </div>
+
+    <div class="list-item" (click)="navigateTo('my-health')">
+      <ion-icon name="fitness"></ion-icon>
+      <span>Minha Saúde</span>
+      <ion-icon class="chevron" name="chevron-forward"></ion-icon>
+    </div>
+
+    <div class="list-item" (click)="navigateTo('schedule-runs')">
+      <ion-icon name="walk"></ion-icon>
+      <span>Agendar Corridas</span>
+      <ion-icon class="chevron" name="chevron-forward"></ion-icon>
+    </div>
+
+    <div class="list-item" (click)="navigateTo('health-2')">
+      <ion-icon name="medical"></ion-icon>
+      <span>Saúde Geral</span>
+      <ion-icon class="chevron" name="chevron-forward"></ion-icon>
+    </div>
+
+    <div class="list-item" (click)="navigateTo('heart-rate-2')">
+      <ion-icon name="pulse"></ion-icon>
+      <span>Meus Batimentos</span>
+      <ion-icon class="chevron" name="chevron-forward"></ion-icon>
+    </div>
+
+    <div class="list-item" (click)="navigateTo('favorite-music')">
+      <ion-icon name="musical-notes"></ion-icon>
+      <span>Músicas Favoritas</span>
+      <ion-icon class="chevron" name="chevron-forward"></ion-icon>
+    </div>
+
+    <div class="list-item" (click)="navigateTo('add-friends')">
+      <ion-icon name="person-add"></ion-icon>
+      <span>Adicionar Amigos</span>
+      <ion-icon class="chevron" name="chevron-forward"></ion-icon>
+    </div>
+
+    <div class="list-item emergency" (click)="navigateTo('emergency')">
+      <ion-icon name="alert-circle"></ion-icon>
+      <span>Botão de Emergência</span>
+      <ion-icon class="chevron" name="chevron-forward"></ion-icon>
+    </div>
+  </div>
+    <ion-card>
+    <ion-img src="/assets/myImg.png"></ion-img>
+    <ion-card-header>
+      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+      <ion-card-title>Card Title</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        Here’s a small text description for the card component.
+        Nothing more, nothing less.
+      </p>
+      <ion-item>
+        <ion-button fill="solid">Action</ion-button>
+        <ion-icon name="heart" slot="end"></ion-icon>
+        <ion-icon name="share" slot="end"></ion-icon>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Previsão do Tempo -->
+  <div class="weather-section">
+    <h3>Previsão do Tempo</h3>
+    <div class="weather-card" *ngIf="weather$ | async as weather">
+      <div class="weather-info" *ngIf="weather">
+        <div class="weather-main">
+          <ion-icon [name]="getWeatherIcon(weather.condition)"></ion-icon>
+          <div class="temperature">
+            <span class="temp">{{ weather.temp }}°C</span>
+            <span class="condition">{{ weather.condition }}</span>
+          </div>
+        </div>
+        <div class="weather-details">
+          <div class="detail">
+            <ion-icon name="water"></ion-icon>
+            <span>{{ weather.humidity }}%</span>
+          </div>
+          <div class="detail">
+            <ion-icon name="speedometer"></ion-icon>
+            <span>{{ weather.windSpeed }} km/h</span>
+          </div>
+        </div>
+      </div>
+      <p *ngIf="!weather" class="weather-loading">Carregando previsão...</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="app-footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <ion-icon name="heart"></ion-icon>
+        <span>App Health</span>
+      </div>
+      <p class="footer-text">
+        Seu parceiro de saúde digital. Monitore sua saúde, agende atividades físicas e mantenha-se conectado com seus amigos.
+      </p>
+      <div class="footer-links">
+        <a href="#" (click)="navigateTo('privacy')">Privacidade</a>
+        <a href="#" (click)="navigateTo('terms')">Termos</a>
+        <a href="#" (click)="navigateTo('support')">Suporte</a>
+        <a href="#" (click)="navigateTo('about')">Sobre</a>
+      </div>
+      <div class="footer-bottom">
+        <div class="copyright">
+          © 2024 App Health. Todos os direitos reservados.
+        </div>
+        <div class="tech-stack">
+          <span>Ionic</span>
+          <span>Angular</span>
+          <span>Firebase</span>
+          <span>TypeScript</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

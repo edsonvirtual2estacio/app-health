@@ -1,0 +1,24 @@
+.action-button {
+  margin-top: 1rem;
+}
+
+.social-button {
+  margin-top: 0.75rem;
+  --color: var(--ion-color-primary);
+}
+
+.message {
+  margin-top: 1rem;
+  color: var(--ion-color-dark-tint);
+}
+
+.friend-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.hint {
+  margin-top: 1rem;
+  color: var(--ion-color-medium);
+}

@@ -1,0 +1,51 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    
+    <ion-menu contentId="main-content" type="overlay">
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-list>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+            <ion-item routerDirection="forward" [routerLink]="[p.url]" lines="none" detail="false">
+              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    <div class="ion-page" id="main-content">
+      <ion-router-outlet></ion-router-outlet>
+    </div>
+
+  </ion-split-pane>
+
+  <div class="bottom-nav">
+    <button type="button" class="nav-button" (click)="navigateTo('/home')">
+      <ion-icon name="home"></ion-icon>
+      <span>Início</span>
+    </button>
+    <button type="button" class="nav-button" (click)="navigateTo('/heart-rate')">
+      <ion-icon name="heart"></ion-icon>
+      <span>Batimentos</span>
+    </button>
+    <button type="button" class="nav-button" (click)="navigateTo('/health')">
+      <ion-icon name="fitness"></ion-icon>
+      <span>Saúde</span>
+    </button>
+    <button type="button" class="nav-button" (click)="navigateTo('/agenda-corridas')">
+      <ion-icon name="calendar"></ion-icon>
+      <span>Agenda</span>
+    </button>
+    <button type="button" class="nav-button" (click)="navigateTo('/favorite-music')">
+      <ion-icon name="musical-notes"></ion-icon>
+      <span>Música</span>
+    </button>
+  </div>
+</ion-app>

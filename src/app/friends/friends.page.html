@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Meus Amigos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Adicionar amigo</ion-card-title>
+      <ion-card-subtitle>Use o nome e email do seu amigo</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Nome</ion-label>
+        <ion-input [(ngModel)]="friendName" placeholder="Digite o nome do amigo"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">E-mail</ion-label>
+        <ion-input [(ngModel)]="friendEmail" type="email" placeholder="email@exemplo.com"></ion-input>
+      </ion-item>
+      <ion-button expand="block" (click)="addFriend()" class="action-button">
+        <ion-icon slot="start" name="person-add"></ion-icon>
+        Adicionar amigo
+      </ion-button>
+      <ion-button expand="block" fill="clear" (click)="shareInvite()" class="social-button">
+        <ion-icon slot="start" name="share-social"></ion-icon>
+        Convidar pelas redes sociais
+      </ion-button>
+      <p class="message" *ngIf="message">{{ message }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Lista de amigos</ion-card-title>
+      <ion-card-subtitle>Toque para remover amigos</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let friend of friends$ | async">
+          <div class="friend-info">
+            <strong>{{ friend.name }}</strong>
+            <p>{{ friend.email }}</p>
+          </div>
+          <ion-button fill="clear" color="danger" slot="end" (click)="removeFriend(friend.id)">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+      <p class="hint" *ngIf="(friends$ | async)?.length === 0">Você ainda não adicionou nenhum amigo. Comece adicionando alguém!</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

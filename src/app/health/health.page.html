@@ -1,0 +1,68 @@
+<ion-icon name="menu-outline"></ion-icon>
+<br>
+<br>
+<br>
+
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Minha Saúde</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Minha Saúde</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="calculator"></ion-icon>
+        Calculadora de IMC
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Peso (kg)</ion-label>
+        <ion-input type="number" [(ngModel)]="peso" placeholder="Ex: 70"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Altura (m)</ion-label>
+        <ion-input type="number" [(ngModel)]="altura" step="0.01" placeholder="Ex: 1.75"></ion-input>
+      </ion-item>
+
+      <ion-button expand="full" (click)="calcularIMC()" color="primary">
+        <ion-icon name="fitness" slot="start"></ion-icon>
+        Calcular IMC
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="imc > 0">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="heart"></ion-icon>
+        Resultado
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>IMC:</strong> {{ imc.toFixed(2) }}</p>
+      <p><strong>Classificação:</strong> {{ classificacao }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="dicas.length > 0">
+    <ion-card-header>
+      <ion-card-title>Dicas de Alimentação</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ul>
+        <li *ngFor="let dica of dicas">{{ dica }}</li>
+      </ul>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
