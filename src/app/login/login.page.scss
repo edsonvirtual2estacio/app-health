@@ -82,3 +82,36 @@ form {
     }
   }
 }
+
+.login-page-content {
+  position: relative;
+}
+
+.login-loading-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: rgba(255, 255, 255, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.login-loading-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem 2rem;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+  text-align: center;
+}
+
+.login-loading-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--ion-color-dark);
+}

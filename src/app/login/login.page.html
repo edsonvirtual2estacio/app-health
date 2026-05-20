@@ -1,4 +1,16 @@
-<ion-content class="ion-padding">
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="page-title">Entrar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding login-page-content">
+  <div class="login-loading-overlay" *ngIf="isLoading">
+    <div class="login-loading-card">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Carregando, aguarde...</p>
+    </div>
+  </div>
   <ion-card class="login-card">
     <div class="logo-container">
       <h1>App Health</h1>
@@ -59,6 +71,7 @@
       (click)="loginWithGoogle()"
       [disabled]="isLoading"
     >
+      <ion-icon slot="start" name="logo-google"></ion-icon>
       <ion-text>
         <span *ngIf="!isLoading">Entrar com Google</span>
         <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>

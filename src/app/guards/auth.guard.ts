@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Observable, from, of } from 'rxjs';
-import { map, take, switchMap, first } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
+import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +10,8 @@ import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
 export class AuthGuard implements CanActivate {
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private auth: Auth
   ) {}
 
   canActivate(
@@ -19,9 +19,8 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> {
     return new Observable<boolean>((observer) => {
-      // Wait for Firebase Auth to initialize
-      const auth = getAuth();
-      const unsubscribe = onAuthStateChanged(auth, (user) => {
+      // Wait for Firebase Auth to initialize using injected Auth instance
+      const unsubscribe = onAuthStateChanged(this.auth, (user) => {
         unsubscribe(); // Unsubscribe after first emission
         if (user) {
           observer.next(true);

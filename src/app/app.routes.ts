@@ -20,7 +20,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
@@ -44,6 +44,11 @@ export const routes: Routes = [
     loadComponent: () => import('./agenda-corridas/agenda-corridas.page').then( m => m.AgendaCorridasPage)
   },
   {
+    path: 'add-friends',
+    redirectTo: 'friends',
+    pathMatch: 'full'
+  },
+  {
     path: 'friends',
     loadComponent: () => import('./friends/friends.page').then(m => m.FriendsPage),
     canActivate: [AuthGuard]
@@ -53,4 +58,9 @@ export const routes: Routes = [
     loadComponent: () => import('./social-feed/social-feed.page').then(m => m.SocialFeedPage),
     canActivate: [AuthGuard]
   },
+  {
+    path: '**',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  }
 ];

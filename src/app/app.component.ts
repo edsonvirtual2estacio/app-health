@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { IonApp, IonRouterOutlet, IonToolbar, IonSplitPane, IonHeader, IonTitle, IonList, IonContent, IonItem, IonIcon, IonLabel, IonMenuToggle, IonMenu } from '@ionic/angular/standalone';
+import { IonApp, IonRouterOutlet, IonToolbar, IonSplitPane, IonHeader, IonTitle, IonList, IonContent, IonItem, IonIcon, IonLabel, IonMenuToggle, IonMenu, IonButton } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { home, people, cart, settings, calendar, heart, fitness, musicalNotes } from 'ionicons/icons';
 
@@ -9,7 +9,7 @@ import { home, people, cart, settings, calendar, heart, fitness, musicalNotes } 
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  imports: [CommonModule, RouterModule, IonContent, IonList, IonRouterOutlet, IonApp, IonSplitPane, IonMenu, IonHeader, IonToolbar, IonTitle, IonMenuToggle, IonItem, IonIcon, IonLabel],
+  imports: [CommonModule, RouterModule, IonContent, IonList, IonRouterOutlet, IonApp, IonSplitPane, IonMenu, IonHeader, IonToolbar, IonTitle, IonMenuToggle, IonItem, IonIcon, IonLabel, IonButton],
 })
 export class AppComponent {
   public appPages = [
@@ -25,6 +25,6 @@ export class AppComponent {
   }
 
   navigateTo(route: string) {
-    this.router.navigate([route]);
+    this.router.navigateByUrl(route);
   }
 }

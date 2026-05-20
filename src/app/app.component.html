@@ -16,6 +16,12 @@
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="forward" routerLink="/friends" lines="none" detail="false">
+              <ion-icon slot="start" name="people"></ion-icon>
+              <ion-label>Meus Amigos</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
         </ion-list>
       </ion-content>
     </ion-menu>
@@ -27,25 +33,25 @@
   </ion-split-pane>
 
   <div class="bottom-nav">
-    <button type="button" class="nav-button" (click)="navigateTo('/home')">
-      <ion-icon name="home"></ion-icon>
+    <ion-button fill="clear" class="nav-button" routerLink="/home">
+      <ion-icon name="home" class="nav-icon"></ion-icon>
       <span>Início</span>
-    </button>
-    <button type="button" class="nav-button" (click)="navigateTo('/heart-rate')">
-      <ion-icon name="heart"></ion-icon>
+    </ion-button>
+    <ion-button fill="clear" class="nav-button" routerLink="/heart-rate">
+      <ion-icon name="heart" class="nav-icon"></ion-icon>
       <span>Batimentos</span>
-    </button>
-    <button type="button" class="nav-button" (click)="navigateTo('/health')">
-      <ion-icon name="fitness"></ion-icon>
+    </ion-button>
+    <ion-button fill="clear" class="nav-button" routerLink="/health">
+      <ion-icon name="fitness" class="nav-icon"></ion-icon>
       <span>Saúde</span>
-    </button>
-    <button type="button" class="nav-button" (click)="navigateTo('/agenda-corridas')">
-      <ion-icon name="calendar"></ion-icon>
+    </ion-button>
+    <ion-button fill="clear" class="nav-button" routerLink="/agenda-corridas">
+      <ion-icon name="calendar" class="nav-icon"></ion-icon>
       <span>Agenda</span>
-    </button>
-    <button type="button" class="nav-button" (click)="navigateTo('/favorite-music')">
-      <ion-icon name="musical-notes"></ion-icon>
-      <span>Música</span>
-    </button>
+    </ion-button>
+    <ion-button fill="clear" class="nav-button" routerLink="/friends">
+      <ion-icon name="people" class="nav-icon"></ion-icon>
+      <span>Amigos</span>
+    </ion-button>
   </div>
 </ion-app>

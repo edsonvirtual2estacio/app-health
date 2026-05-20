@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
+import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NoAuthGuard implements CanActivate {
   constructor(
-    private router: Router
+    private router: Router,
+    private auth: Auth
   ) {}
 
   canActivate(
@@ -16,9 +17,8 @@ export class NoAuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> {
     return new Observable<boolean>((observer) => {
-      // Wait for Firebase Auth to initialize
-      const auth = getAuth();
-      const unsubscribe = onAuthStateChanged(auth, (user) => {
+      // Wait for Firebase Auth to initialize using injected Auth instance
+      const unsubscribe = onAuthStateChanged(this.auth, (user) => {
         unsubscribe(); // Unsubscribe after first emission
         if (!user) {
           observer.next(true);

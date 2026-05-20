@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithCredential, GoogleAuthProvider, User, getRedirectResult, signInWithRedirect, UserCredential, signInWithPopup } from '@angular/fire/auth';
+import { environment } from '../../environments/environment';
+import { Auth, authState, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithCredential, GoogleAuthProvider, User, getRedirectResult, signInWithRedirect, UserCredential, signInWithPopup } from '@angular/fire/auth';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
@@ -22,8 +23,8 @@ export class AuthService {
       });
     }
 
-    // Initialize auth state listener
-    this.auth.onAuthStateChanged((user) => {
+    // Initialize auth state listener through AngularFire authState observable
+    authState(this.auth).subscribe((user) => {
       console.log('Auth state changed:', user);
       if (user) {
         console.log('User displayName:', user.displayName);
@@ -89,12 +90,34 @@ export class AuthService {
   signInWithGoogle(): Promise<any> {
     this.loading$.next(true);
 
+    const finalize = () => {
+      this.loading$.next(false);
+    };
+
     if (Capacitor.isNativePlatform()) {
-      // Use Capacitor Google Auth plugin for native platforms
+      const clientId = environment.googleClientId;
+
+      if (!clientId) {
+        const error = new Error('Google Native Client ID não configurado. Verifique environment.ts.');
+        console.error(error.message);
+        this.loading$.next(false);
+        return Promise.reject(error);
+      }
+
+      GoogleAuth.initialize({
+        clientId,
+        scopes: ['profile', 'email'],
+        grantOfflineAccess: true,
+      });
+
       return GoogleAuth.signIn()
-        .then((result) => {
+        .then((result: any) => {
           console.log('Capacitor Google sign in result:', result);
-          const credential = GoogleAuthProvider.credential(result.authentication.idToken);
+          const idToken = result?.authentication?.idToken || result?.idToken;
+          if (!idToken) {
+            throw new Error('Não foi possível obter o token do Google.');
+          }
+          const credential = GoogleAuthProvider.credential(idToken);
           return signInWithCredential(this.auth, credential);
         })
         .then((firebaseResult) => {
@@ -107,29 +130,28 @@ export class AuthService {
           this.handleError(error);
           throw error;
         })
-        .finally(() => {
-          this.loading$.next(false);
-        });
-    } else {
-      // Use Firebase popup for web - more reliable for development
-      const provider = new GoogleAuthProvider();
-      provider.addScope('profile');
-      provider.addScope('email');
-      return signInWithPopup(this.auth, provider)
-        .then((result: UserCredential) => {
-          console.log('Google sign in result:', result);
-          this.user$.next(result.user);
-          return result;
-        })
-        .catch((error: any) => {
-          console.error('Firebase popup error:', error);
-          this.handleError(error);
-          throw error;
-        })
-        .finally(() => {
-          this.loading$.next(false);
-        });
+        .finally(finalize);
     }
+
+    const provider = new GoogleAuthProvider();
+    provider.addScope('profile');
+    provider.addScope('email');
+
+    return signInWithPopup(this.auth, provider)
+      .then((result: UserCredential) => {
+        console.log('Google sign in result:', result);
+        this.user$.next(result.user);
+        return result;
+      })
+      .catch((error: any) => {
+        console.error('Firebase popup error:', error);
+        if (error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request' || error.code === 'auth/popup-closed-by-user' || error.code === 'auth/operation-not-supported-in-this-environment') {
+          return signInWithRedirect(this.auth, provider);
+        }
+        this.handleError(error);
+        throw error;
+      })
+      .finally(finalize);
   }
 
   logout(): Promise<void> {

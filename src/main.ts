@@ -3,6 +3,7 @@ import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } 
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth, connectAuthEmulator } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { addIcons } from 'ionicons';
 import { home, people, cart, settings, personCircle, grid, list, heart, fitness, walk, medical, pulse, musicalNotes, personAdd, alertCircle, chevronForward, logoGoogle, share, water, speedometer, logOut, cloud, sunny, rainy, partlySunny, mail } from 'ionicons/icons';
@@ -33,6 +34,7 @@ bootstrapApplication(AppComponent, {
       }
       return auth;
     }),
+    provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
   ],
 });

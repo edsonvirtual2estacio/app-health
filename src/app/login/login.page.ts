@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { IonContent, IonHeader, IonToolbar, IonTitle, IonButton, IonInput, IonItem, IonLabel, IonCard, IonSpinner, IonText, AlertController } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonToolbar, IonTitle, IonButton, IonInput, IonItem, IonLabel, IonCard, IonIcon, IonSpinner, IonText, AlertController } from '@ionic/angular/standalone';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -13,8 +13,11 @@ import { AuthService } from '../services/auth.service';
     ReactiveFormsModule,
     RouterModule,
     IonContent,
-
+    IonHeader,
+    IonToolbar,
+    IonTitle,
     IonButton,
+    IonIcon,
     IonInput,
     IonItem,
     IonLabel,
@@ -57,7 +60,7 @@ export class LoginPage implements OnInit {
 
     try {
       await this.authService.signIn(email, password);
-      this.router.navigate(['/home']);
+      this.router.navigateByUrl('/home');
     } catch (error: any) {
       await this.showAlert('Erro de Login', error.message || 'Falha ao fazer login.');
     }
@@ -66,7 +69,7 @@ export class LoginPage implements OnInit {
   async loginWithGoogle() {
     try {
       await this.authService.signInWithGoogle();
-      this.router.navigate(['/home']);
+      this.router.navigateByUrl('/home');
     } catch (error: any) {
       await this.showAlert('Erro de Login', error.message || 'Falha ao fazer login com Google.');
     }
