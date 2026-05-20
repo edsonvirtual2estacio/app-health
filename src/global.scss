@@ -71,12 +71,36 @@ body {
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
 
+ion-header ion-toolbar {
+  --background: var(--ion-color-light);
+  min-height: 3.6rem;
+  padding: 0 0.75rem;
+}
+
+ion-header ion-toolbar ion-buttons {
+  align-items: center;
+}
+
+ion-back-button {
+  --color: var(--ion-color-primary);
+  --icon-size: 1.35rem;
+  --padding-start: 0.25rem;
+  --padding-end: 0.25rem;
+}
+
 .page-title {
-  font-size: 1.05rem;
+  font-size: 1.12rem;
   font-weight: 700;
-  letter-spacing: 0.01rem;
+  letter-spacing: 0.02rem;
   text-transform: uppercase;
-  color: #0a2540;
+  color: var(--ion-color-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+ion-title.page-title {
+  max-width: calc(100% - 4rem);
 }
 
 .page-title + .subtitle,
