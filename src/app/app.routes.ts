@@ -59,6 +59,10 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'descanso',
+    loadComponent: () => import('./descanso/descanso.page').then( m => m.DescansoPage)
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full'

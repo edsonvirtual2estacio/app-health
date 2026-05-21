@@ -16,6 +16,7 @@ export class AppComponent {
   public appPages = [
     { title: 'Início', url: '/home', icon: 'home' },
     { title: 'Agendar Corridas', url: '/agenda-corridas', icon: 'calendar' },
+    { title: 'Descanso', url: '/descanso', icon: 'heart' },
     { title: 'Clientes', url: '/clientes', icon: 'people' },
     { title: 'Vendas', url: '/vendas', icon: 'cart' },
     { title: 'Configurações', url: '/config', icon: 'settings' },
