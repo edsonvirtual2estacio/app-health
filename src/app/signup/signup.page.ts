@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { IonContent, IonHeader, IonToolbar, IonTitle, IonButton, IonInput, IonItem, IonLabel, IonCard, IonSpinner, IonText, IonBackButton, IonButtons, AlertController } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonToolbar, IonTitle, IonButton, IonInput, IonItem, IonLabel, IonCard, IonText, IonBackButton, IonButtons, AlertController } from '@ionic/angular/standalone';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -21,7 +21,6 @@ import { AuthService } from '../services/auth.service';
     IonItem,
     IonLabel,
     IonCard,
-    IonSpinner,
     IonText,
     IonBackButton,
     IonButtons,
@@ -31,7 +30,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class SignupPage implements OnInit {
   signupForm!: FormGroup;
-  isLoading = false;
+  
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,9 +46,7 @@ export class SignupPage implements OnInit {
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
     }, { validators: this.passwordMatchValidator });
 
-    this.authService.getLoading().subscribe(loading => {
-      this.isLoading = loading;
-    });
+    
   }
 
   passwordMatchValidator(group: FormGroup): { [key: string]: any } | null {

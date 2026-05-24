@@ -5,6 +5,7 @@ import { filter } from 'rxjs/operators';
 import { IonApp, IonRouterOutlet, IonToolbar, IonSplitPane, IonHeader, IonTitle, IonList, IonContent, IonItem, IonIcon, IonLabel, IonMenuToggle, IonMenu, IonButton } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { home, people, cart, settings, calendar, heart, fitness, musicalNotes } from 'ionicons/icons';
+import { moon } from 'ionicons/icons';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,8 @@ export class AppComponent {
 
   constructor(private router: Router) {
     addIcons({ home, people, cart, settings, calendar, heart, fitness, musicalNotes });
+  addIcons({ home, people, cart, settings, calendar, heart, fitness, musicalNotes, moon });
+  { title: 'Descanso', url: '/descanso', icon: 'moon' },
 
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)

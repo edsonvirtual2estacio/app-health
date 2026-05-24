@@ -62,4 +62,61 @@
       </ul>
     </ion-card-content>
   </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Contato do Médico</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Nome do Médico</ion-label>
+        <ion-input [(ngModel)]="doctorName" placeholder="Dr. Fulano"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Telefone</ion-label>
+        <ion-input [(ngModel)]="doctorPhone" placeholder="(00) 9 9999-9999"></ion-input>
+      </ion-item>
+      <ion-button expand="block" (click)="saveDoctor()">Salvar Contato</ion-button>
+      <ion-button expand="block" color="danger" fill="clear" (click)="deleteDoctor()">Remover Contato</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Registros de Saúde</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form (ngSubmit)="submitRecordForm()">
+        <ion-item>
+          <ion-label position="floating">Título</ion-label>
+          <ion-input [(ngModel)]="recordFormTitle" name="recordTitle"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Anotações</ion-label>
+          <ion-input [(ngModel)]="recordFormNotes" name="recordNotes"></ion-input>
+        </ion-item>
+        <ion-button expand="block" type="submit">{{ editingId ? 'Salvar Alteração' : 'Adicionar Registro' }}</ion-button>
+        <ion-button *ngIf="editingId" expand="block" color="medium" fill="clear" (click)="editingId=null; recordFormTitle=''; recordFormNotes=''">Cancelar Edição</ion-button>
+      </form>
+
+      <div *ngIf="healthRecords.length === 0">
+        <p class="hint">Nenhum registro cadastrado.</p>
+      </div>
+      <div *ngIf="healthRecords.length > 0">
+        <ul class="records-list">
+          <li *ngFor="let r of healthRecords" class="record-item">
+            <div>
+              <strong>{{ r.title }}</strong>
+              <div class="muted">{{ r.date | date:'short' }}</div>
+              <div>{{ r.notes }}</div>
+            </div>
+            <div class="record-actions">
+              <button class="btn btn-clear" (click)="startEditRecord(r.id)">Editar</button>
+              <button class="btn btn-clear btn-danger" (click)="deleteRecord(r.id)">Excluir</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

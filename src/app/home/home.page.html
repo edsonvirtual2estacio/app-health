@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <div class="header-top">
-      <ng-container *ngIf="user$ | async as user; else loading">
+      <ng-container *ngIf="user$ | async as user">
         <div class="profile-section">
           <div class="avatar-wrapper">
             <ng-container *ngIf="getPhotoURL(user); else noAvatar">
@@ -23,9 +23,7 @@
           <ion-icon name="log-out"></ion-icon>
         </ion-button>
       </ng-container>
-      <ng-template #loading>
-        <ion-title>Carregando perfil...</ion-title>
-      </ng-template>
+      
     </div>
   </ion-toolbar>
 </ion-header>
@@ -205,7 +203,7 @@
           </div>
         </div>
       </div>
-      <p *ngIf="!weather" class="weather-loading">Carregando previsão...</p>
+      
     </div>
   </div>
 

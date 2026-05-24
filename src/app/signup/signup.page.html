@@ -72,10 +72,9 @@
         expand="block"
         type="submit"
         class="signup-button"
-        [disabled]="isLoading || signupForm.invalid"
+        [disabled]="signupForm.invalid"
       >
-        <span *ngIf="!isLoading">Criar Conta</span>
-        <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+        Criar Conta
       </ion-button>
     </form>
 
@@ -88,12 +87,8 @@
       color="light"
       class="google-button"
       (click)="signupWithGoogle()"
-      [disabled]="isLoading"
     >
-      <ion-text>
-        <span *ngIf="!isLoading">Cadastrar com Google</span>
-        <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
-      </ion-text>
+      <ion-text>Cadastrar com Google</ion-text>
     </ion-button>
 
     <div class="login-link">

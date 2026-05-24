@@ -35,27 +35,21 @@
   <div class="bottom-nav" *ngIf="showAppMenu">
     <ion-button fill="clear" class="nav-button" routerLink="/home">
       <ion-icon name="home" class="nav-icon"></ion-icon>
-      <span>Início</span>
     </ion-button>
     <ion-button fill="clear" class="nav-button" routerLink="/heart-rate">
       <ion-icon name="heart" class="nav-icon"></ion-icon>
-      <span>Batimentos</span>
     </ion-button>
     <ion-button fill="clear" class="nav-button" routerLink="/health">
       <ion-icon name="fitness" class="nav-icon"></ion-icon>
-      <span>Saúde</span>
     </ion-button>
     <ion-button fill="clear" class="nav-button" routerLink="/agenda-corridas">
       <ion-icon name="calendar" class="nav-icon"></ion-icon>
-      <span>Agenda</span>
     </ion-button>
      <button type="button" class="nav-button" (click)="navigateTo('/descanso')">
-  <ion-icon name="moon"></ion-icon>
-  <span>Descanso</span>
-</button>
+      <ion-icon name="moon"></ion-icon>
+    </button>
     <ion-button fill="clear" class="nav-button" routerLink="/friends">
       <ion-icon name="people" class="nav-icon"></ion-icon>
-      <span>Amigos</span>
     </ion-button>
   </div>
 </ion-app>

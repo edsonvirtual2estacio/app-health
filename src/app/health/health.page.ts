@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonInput, IonButton, IonLabel, IonItem, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonInput, IonButton, IonLabel, IonItem, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonList } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { calculator, fitness, heart, menuOutline } from 'ionicons/icons';
 
@@ -11,7 +11,7 @@ import { calculator, fitness, heart, menuOutline } from 'ionicons/icons';
   templateUrl: './health.page.html',
   styleUrls: ['./health.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, CommonModule, FormsModule, IonInput, IonButton, IonLabel, IonItem, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, CommonModule, FormsModule, IonInput, IonButton, IonLabel, IonItem, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonList]
 })
 export class HealthPage implements OnInit {
   peso: number = 0;
@@ -19,10 +19,22 @@ export class HealthPage implements OnInit {
   imc: number = 0;
   classificacao: string = '';
   dicas: string[] = [];
+  // contato do médico
+  doctorName: string = '';
+  doctorPhone: string = '';
+
+  // registros de saúde (anotações, consultas, etc.)
+  healthRecords: Array<{ id: string; title: string; notes: string; date: number }> = [];
+  // edição de registro
+  editingId: string | null = null;
+  recordFormTitle = '';
+  recordFormNotes = '';
 menu: any;
 
   constructor() {
     addIcons({menuOutline,calculator,fitness,heart});
+    this.loadDoctor();
+    this.loadRecords();
   }
 
   ngOnInit() {
@@ -88,5 +100,79 @@ menu: any;
         'Evite dietas milagrosas e foque em mudanças sustentáveis.'
       ];
     }
+  }
+
+  // doctor contact
+  saveDoctor() {
+    const obj = { name: this.doctorName, phone: this.doctorPhone };
+    localStorage.setItem('doctorContact', JSON.stringify(obj));
+  }
+
+  loadDoctor() {
+    try {
+      const raw = localStorage.getItem('doctorContact');
+      if (raw) {
+        const obj = JSON.parse(raw);
+        this.doctorName = obj.name || '';
+        this.doctorPhone = obj.phone || '';
+      }
+    } catch (e) {
+      // ignore
+    }
+  }
+
+  deleteDoctor() {
+    this.doctorName = '';
+    this.doctorPhone = '';
+    localStorage.removeItem('doctorContact');
+  }
+
+  // health records CRUD
+  loadRecords() {
+    try {
+      const raw = localStorage.getItem('healthRecords');
+      this.healthRecords = raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      this.healthRecords = [];
+    }
+  }
+
+  addRecord(title: string, notes: string) {
+    const entry = { id: Date.now().toString(), title, notes, date: Date.now() };
+    this.healthRecords.unshift(entry);
+    localStorage.setItem('healthRecords', JSON.stringify(this.healthRecords));
+  }
+
+  updateRecord(id: string, title: string, notes: string) {
+    const idx = this.healthRecords.findIndex(r => r.id === id);
+    if (idx > -1) {
+      this.healthRecords[idx].title = title;
+      this.healthRecords[idx].notes = notes;
+      localStorage.setItem('healthRecords', JSON.stringify(this.healthRecords));
+    }
+  }
+
+  deleteRecord(id: string) {
+    this.healthRecords = this.healthRecords.filter(r => r.id !== id);
+    localStorage.setItem('healthRecords', JSON.stringify(this.healthRecords));
+  }
+
+  startEditRecord(id: string) {
+    const rec = this.healthRecords.find(r => r.id === id);
+    if (!rec) return;
+    this.editingId = id;
+    this.recordFormTitle = rec.title;
+    this.recordFormNotes = rec.notes;
+  }
+
+  submitRecordForm() {
+    if (this.editingId) {
+      this.updateRecord(this.editingId, this.recordFormTitle, this.recordFormNotes);
+      this.editingId = null;
+    } else if (this.recordFormTitle || this.recordFormNotes) {
+      this.addRecord(this.recordFormTitle, this.recordFormNotes);
+    }
+    this.recordFormTitle = '';
+    this.recordFormNotes = '';
   }
 }
